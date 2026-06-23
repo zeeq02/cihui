@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Finance Tracker</title>
+    <title>Premium Finance Dashboard</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --success: #16a34a;
-            --danger: #dc2626;
-            --background: #f8fafc;
+            --primary: #4f46e5;
+            --success: #10b981;
+            --danger: #ef4444;
+            --background: #f1f5f9;
             --surface: #ffffff;
-            --text: #1e293b;
+            --text: #0f172a;
             --text-light: #64748b;
+            --border: #e2e8f0;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
         }
 
         body {
@@ -29,94 +30,156 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         header h1 {
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
         }
 
-        /* Dashboard Grid */
+        .btn-clear {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-clear:hover {
+            background-color: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        /* Dashboard Metrics */
         .dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
             margin-bottom: 2rem;
         }
 
         .card {
             background: var(--surface);
             padding: 1.5rem;
-            border-radius: 12px;
+            border-radius: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .card h3 {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
             color: var(--text-light);
             margin-bottom: 0.5rem;
         }
 
         .card p {
-            font-size: 1.75rem;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 700;
         }
 
-        #balance { color: var(--primary); }
+        #balance { color: var(--text); }
         #income { color: var(--success); }
         #expense { color: var(--danger); }
 
-        /* Main Content Layout */
+        /* Visual Budget Progress Bar */
+        .progress-container {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar-bg {
+            background: var(--border);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: var(--primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* Layout split */
         .main-content {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         @media (min-width: 768px) {
             .main-content {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1.2fr 1.8fr;
             }
         }
 
-        /* Forms & Interactive Elements */
         .panel {
             background: var(--surface);
-            padding: 1.5rem;
-            border-radius: 12px;
+            padding: 1.75rem;
+            border-radius: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .panel h2 {
-            margin-bottom: 1rem;
-            font-size: 1.25rem;
-            border-bottom: 2px solid var(--background);
-            padding-bottom: 0.5rem;
+            margin-bottom: 1.25rem;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
+            color: var(--text-light);
         }
 
         input, select {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 1rem
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: #fafafa;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--surface);
+        }
+
+        button[type="submit"] {
